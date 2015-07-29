@@ -14,7 +14,8 @@ public class MapTile
 		mIndex = pIndex;
 		mPosition = pPos;
 	}
-
+	
 	private int mIndex;
 	private Vector2 mPosition;
+	private Rect mDrawRact;
 }
