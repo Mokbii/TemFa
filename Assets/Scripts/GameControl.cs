@@ -1,5 +1,10 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// 조작과 관련된 내용을 관리하는 클래스
+/// 모든 조작은 이곳에서 처리됨. [7/30/2015 khsong33]
+/// </summary>
+using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameControl
 {
@@ -22,7 +27,6 @@ public class GameControl
 		set { mOnMoveEnd = value; }
 		get { return mOnMoveEnd; }
 	}
-
 	public static GameControl aInstance
 	{
 		get
@@ -39,12 +43,9 @@ public class GameControl
 	public void OnUpdate () 
 	{
 		_UpdateMouse();
-//#if UNITY_EDITOR
-//		_UpdateMouse();
-//#else
-//		_UpdateTouch();
-//#endif
 	}
+
+	// 조작과 관련된 처리
 	private void _UpdateMouse()
 	{
 		if (Input.GetMouseButtonDown(0))
@@ -69,37 +70,7 @@ public class GameControl
 				aOnMovePosition(new Vector2(lDeltaPosition.x, lDeltaPosition.y));
 		}
 	}
-	private void _UpdateTouch()
-	{
-		int nbTouches = Input.touchCount;
-		if (nbTouches > 0)
-		{
-			for (int i = 0; i < nbTouches; i++)
-			{
-				Touch touch = Input.GetTouch(i);
 
-				TouchPhase phase = touch.phase;
-
-				switch (phase)
-				{
-					case TouchPhase.Moved:
-						Vector2 lMovePosition = touch.position - new Vector2(mLastMousePosition.x, mLastMousePosition.y);
-						if (aOnMovePosition != null)
-							aOnMovePosition(lMovePosition);
-						break;
-					case TouchPhase.Began:
-						mLastMousePosition = touch.position;
-						if (aOnMoveStart != null)
-							aOnMoveStart();
-						break;
-					case TouchPhase.Ended:
-						if (aOnMoveEnd != null)
-							aOnMoveEnd();
-						break;
-				}
-			}
-		}
-	}
 	private static GameControl sInstance;
 	private OnMovePosition mOnMovePosition;
 	private OnMoveStart mOnMoveStart;

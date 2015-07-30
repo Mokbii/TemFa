@@ -69,19 +69,8 @@
     <Compile Include="Assets\Scripts\Map\Map.cs" />
     <Compile Include="Assets\Scripts\Map\MapTile.cs" />
     <Compile Include="Assets\Scripts\TestManager.cs" />
-    <Compile Include="Assets\Scripts\Unit.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\AutoBlink.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\AutoBlinkforSD.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\CameraController.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\FaceUpdate.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\IKCtrlRightHand.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\IdleChanger.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\RandomWind.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\SpringBone.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\SpringCollider.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\SpringManager.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\ThirdPersonCamera.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\UnityChanControlScriptWithRgidBody.cs" />
+    <Compile Include="Assets\Scripts\Unit\Unit.cs" />
+    <Compile Include="Assets\Scripts\Unit\UnitHero.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
