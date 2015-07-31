@@ -11,8 +11,6 @@ public class UnitHero : Unit
 		GameControl.aInstance.aOnMoveStart += _OnMoveStart;
 		GameControl.aInstance.aOnMoveEnd += _OnMoveEnd;
 		base.Init();
-
-		mMoveStartAni = false;
 	}
 	public override void Destroy()
 	{
@@ -20,6 +18,12 @@ public class UnitHero : Unit
 		GameControl.aInstance.aOnMoveStart -= _OnMoveStart;
 		GameControl.aInstance.aOnMoveEnd -= _OnMoveEnd;
 		base.Destroy();
+	}
+	public void Update()
+	{
+		//Animation lCurrentAnimation = vAnim.GetComponent<Animation>();
+		//if(lCurrentAnimation != null)
+		//	Debug.Log(lCurrentAnimation.clip.name);
 	}
 	private void _OnMovePosition(Vector2 pDeltaPos)
 	{
@@ -41,16 +45,6 @@ public class UnitHero : Unit
 		float lMoveX = mTransform.position.x + mMoveSpeed.x;
 		float lMoveY = mTransform.position.z + mMoveSpeed.y;
 
-		// 움직임이 없을 경우 뛰는 애니메이션을 시작하지 않음
-		if (Mathf.Abs(mMoveSpeed.x) > 0 && Mathf.Abs(mMoveSpeed.y) > 0)
-		{
-			if (!mMoveStartAni)
-			{
-				vAnim.CrossFade("Running@loop", 0.1f);
-				mMoveStartAni = true;
-			}
-		}
-
 		// X타일 검사
 		MapTile lCheckTileX = mMapInfo.GetMapTile(new Vector3(lMoveX, 0, mTransform.position.z));
 		if (lCheckTileX == null || lCheckTileX.aTileType != Map.MapTileType.Way)
@@ -69,13 +63,11 @@ public class UnitHero : Unit
 	private void _OnMoveStart()
 	{
 		mMoveSpeed = new Vector2(0, 0);
+		vAnim.CrossFade("Running@loop", 0.1f, 0, 0.5f);
 	}
 	private void _OnMoveEnd()
 	{
 		mMoveSpeed = new Vector2(0, 0);
-		vAnim.CrossFade("Standing@loop", 0.1f);
-		mMoveStartAni = false;
+		vAnim.CrossFade("Standing@loop", 0.1f, 0, 0.5f);
 	}
-
-	private bool mMoveStartAni;
 }
