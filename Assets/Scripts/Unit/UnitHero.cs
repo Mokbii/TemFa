@@ -3,27 +3,43 @@ using System.Collections;
 
 public class UnitHero : Unit
 {
+	public float vWeaponDelay = 1.0f;
+	public Transform vModelTransform;
+	public Transform vWeaponTransform;
 	public Animator vAnim;
+	public Rigidbody vRigidBody;
 
 	public override void Init()
 	{
+		base.Init();
+
 		GameControl.aInstance.aOnMovePosition += _OnMovePosition;
 		GameControl.aInstance.aOnMoveStart += _OnMoveStart;
 		GameControl.aInstance.aOnMoveEnd += _OnMoveEnd;
-		base.Init();
+		vUnitColliderInfo.aOnColliderDelegate += _OnCollider;
+
+		vRigidBody = gameObject.GetComponent<Rigidbody>();
+
+		StartCoroutine(TestMissile());
+	}
+	private IEnumerator TestMissile()
+	{
+		while (true)
+		{
+			yield return new WaitForSeconds(vWeaponDelay);
+			Vector3 lDirect = new Vector3(vWeaponTransform.position.x - vModelTransform.position.x,
+											0,
+											vWeaponTransform.position.z - vModelTransform.position.z);
+			lDirect = lDirect.normalized;
+			MissileManager.aInstance.AddMissile(this, Missile.Type.Direct, vWeaponTransform.position, lDirect);
+		}
 	}
 	public override void Destroy()
 	{
 		GameControl.aInstance.aOnMovePosition -= _OnMovePosition;
 		GameControl.aInstance.aOnMoveStart -= _OnMoveStart;
-		GameControl.aInstance.aOnMoveEnd -= _OnMoveEnd;
+		GameControl.aInstance.aOnMoveEnd -= _OnMoveEnd; 
 		base.Destroy();
-	}
-	public void Update()
-	{
-		//Animation lCurrentAnimation = vAnim.GetComponent<Animation>();
-		//if(lCurrentAnimation != null)
-		//	Debug.Log(lCurrentAnimation.clip.name);
 	}
 	private void _OnMovePosition(Vector2 pDeltaPos)
 	{
@@ -55,9 +71,18 @@ public class UnitHero : Unit
 		if (lCheckTileY == null || lCheckTileY.aTileType != Map.MapTileType.Way)
 			lMoveY = mTransform.position.z;
 
-		mTransform.position = new Vector3(lMoveX,
-										  mTransform.position.y,
-										  lMoveY);
+		if (vRigidBody != null)
+		{
+			vRigidBody.transform.position = new Vector3(lMoveX,
+											  mTransform.position.y,
+											  lMoveY);
+		}
+		else
+		{
+			mTransform.position = new Vector3(lMoveX,
+											  mTransform.position.y,
+											  lMoveY);
+		}
 	}
 
 	private void _OnMoveStart()
@@ -69,5 +94,15 @@ public class UnitHero : Unit
 	{
 		mMoveSpeed = new Vector2(0, 0);
 		vAnim.CrossFade("Standing@loop", 0.1f, 0, 0.5f);
+	}
+
+	private void _OnCollider(ColliderInfo pColliderInfo)
+	{
+		if (pColliderInfo.vType == ColliderType.Missile && pColliderInfo.vValue != vUnitTeamId)
+		{
+			Missile lMissile = pColliderInfo.GetComponent<Missile>();
+
+			Debug.Log("Damage from missile - " + lMissile.vPower + "!!!!!");
+		}
 	}
 }

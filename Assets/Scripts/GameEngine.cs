@@ -9,20 +9,27 @@ public class GameEngine : MonoBehaviour
 {
 	public UnitHero vHeroUnit;
 	public Map vMapBase;
-	void Start () 
+	// 게임 엔진에서만 Awake 사용 다른곳에서 초기화시엔 Start에서만 처리하도록 합니다.
+	void Awake () 
 	{
 		if (vHeroUnit == null)
 			Debug.LogError("vHeroUnit is Empty - " + this);
 		if(vMapBase == null)
 			Debug.LogError("vMapBase is Empty - " + this);
 
+		// 게임에서 사용할 싱글턴 객체들 처리(관리자)
 		GameControl.aInstance.Init();
+		ColliderManager.aInstance.Init();
+		MissileManager.aInstance.Init();
+
+		// 게임 필수 오브젝트 처리
 		vHeroUnit.Init();
 		vMapBase.Init();
 
+		// 로드는 차후 다른곳으로 이동 - 랜덤맵 사용
 		_LoadMap();
 	}
-	void Update ()
+	void Update()
 	{
 		GameControl.aInstance.OnUpdate();
 	}
