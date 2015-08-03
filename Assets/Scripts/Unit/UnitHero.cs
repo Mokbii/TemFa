@@ -9,6 +9,8 @@ public class UnitHero : Unit
 	public Animator vAnim;
 	public Rigidbody vRigidBody;
 
+	public Transform vTargetObject;
+
 	public override void Init()
 	{
 		base.Init();
@@ -21,6 +23,19 @@ public class UnitHero : Unit
 		vRigidBody = gameObject.GetComponent<Rigidbody>();
 
 		StartCoroutine(TestMissile());
+		StartCoroutine(FindTargetRot());
+	}
+	private IEnumerator FindTargetRot()
+	{
+		while (true)
+		{
+			yield return null;
+			Vector3 lDirectPos = vTargetObject.position - aTransform.position;
+
+			float lDirectionY = Mathf.Atan2(lDirectPos.x, lDirectPos.z) * Mathf.Rad2Deg;
+			Debug.Log("Target Direction Y - " + lDirectionY);
+			aTransform.rotation = Quaternion.Euler(new Vector3(0, lDirectionY, 0));
+		}
 	}
 	private IEnumerator TestMissile()
 	{
