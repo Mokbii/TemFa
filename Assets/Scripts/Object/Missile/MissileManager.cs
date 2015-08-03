@@ -2,8 +2,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
+public enum MissileType
+{
+	Direct,
+	Slow,
+	Count
+}
 public class MissileManager 
 {
+	public readonly String[] MissileTypePath = {
+		"Prefabs/Missile/Direct Missile", // Direct
+		"Prefabs/Missile/Slow Missile", // Slow
+	};
+	
 	public static MissileManager aInstance
 	{
 		get
@@ -16,21 +28,17 @@ public class MissileManager
 
 	public void Init()
 	{
-        mMissilePool = new Dictionary<Missile.Type, Queue<Missile>>();
+        mMissilePool = new Dictionary<MissileType, Queue<Missile>>();
 	}
-	public void AddMissile(Unit pAttackUnit, Missile.Type pType, Vector3 pStartPos, Vector3 pMissileDirect)
+	public void AddMissile(Unit pAttackUnit, MissileType pType, Vector3 pStartPos, Vector3 pMissileDirect)
 	{
-		GameObject lMissilePrefab = null;
-		GameObject lMissileObject = null;
-		if (pType == Missile.Type.Direct)
-		{
-			lMissilePrefab = (GameObject)Resources.Load("Prefabs/Missile/Direct Missile");
-			lMissileObject = (GameObject)GameObject.Instantiate(lMissilePrefab, pStartPos, Quaternion.identity);
-
-			DirectMissile lMissile = lMissileObject.GetComponent<DirectMissile>();
-            lMissile.Init(_CreateMissileGuid());
+		Missile lMissile = _CreateMissile(pType, pStartPos);
+		if(lMissile != null)
 			lMissile.GoShot(pAttackUnit, pStartPos, pMissileDirect);
-		}
+		//if (pType == Missile.Type.Direct)
+		//{
+			
+		//}
 	}
     public void RemoveMissile(Missile pMissile)
     {
@@ -43,21 +51,32 @@ public class MissileManager
             mMissilePool[pMissile.vType].Enqueue(pMissile);
         }
     }
-    private Missile _CreateMissile(Missile.Type pType)
+	private Missile _CreateMissile(MissileType pType, Vector3 pStartPos)
     {
-		return null;
-		//if (pType == Missile.Type.Direct)
-		//{
+		Missile lResultMissile = _FindMissileFromPool(pType);
+		if (lResultMissile == null)
+		{
+			GameObject lMissilePrefab = null;
+			GameObject lMissileObject = null;
 
-		//}
-		//return null;
+			lMissilePrefab = (GameObject)Resources.Load(MissileTypePath[(int)pType]);
+			lMissileObject = (GameObject)GameObject.Instantiate(lMissilePrefab, pStartPos, Quaternion.identity);
+
+			lResultMissile = lMissileObject.GetComponent<Missile>();
+			lResultMissile.Init(_CreateMissileGuid());
+		}
+		return lResultMissile;
     }
-    private Missile _FindMissileFromPool(Missile.Type pType)
+	private Missile _FindMissileFromPool(MissileType pType)
     {
         if (!mMissilePool.ContainsKey(pType))
             return null;
+		if (mMissilePool[pType].Count <= 0)
+			return null;
 
-        return mMissilePool[pType].Dequeue();
+		Missile lResultMissile = mMissilePool[pType].Dequeue();
+		lResultMissile.gameObject.SetActive(true);
+		return lResultMissile;
     }
     private int _CreateMissileGuid()
     {
@@ -67,5 +86,5 @@ public class MissileManager
 	private static MissileManager sInstance;
     private int mCurrentCreateGuid = 0;
 
-    private Dictionary<Missile.Type, Queue<Missile>> mMissilePool;
+	private Dictionary<MissileType, Queue<Missile>> mMissilePool;
 }

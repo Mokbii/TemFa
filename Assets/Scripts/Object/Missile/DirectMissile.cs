@@ -7,7 +7,7 @@ public class DirectMissile : Missile
     {
         base.Init(pGuid);
         vColliderInfo.aOnColliderDelegate += _OnCollider;
-        vType = Missile.Type.Direct;
+        vType = MissileType.Direct;
     }
     protected override void _OnShot()
     {

@@ -4,6 +4,7 @@ using System.Collections;
 public class UnitHero : Unit
 {
 	public float vWeaponDelay = 1.0f;
+	public MissileType vMissileType = MissileType.Direct;
 	public Transform vModelTransform;
 	public Transform vWeaponTransform;
 	public Animator vAnim;
@@ -22,22 +23,32 @@ public class UnitHero : Unit
 
 		vRigidBody = gameObject.GetComponent<Rigidbody>();
 
-		StartCoroutine(TestMissile());
-		StartCoroutine(FindTargetRot());
+		StartCoroutine(_ShotMissile());
+		StartCoroutine(_FindTargetRot());
 	}
-	private IEnumerator FindTargetRot()
+	private IEnumerator _FindTargetRot()
 	{
 		while (true)
 		{
 			yield return null;
 			Vector3 lDirectPos = vTargetObject.position - aTransform.position;
 
-			float lDirectionY = Mathf.Atan2(lDirectPos.x, lDirectPos.z) * Mathf.Rad2Deg;
-			Debug.Log("Target Direction Y - " + lDirectionY);
-			aTransform.rotation = Quaternion.Euler(new Vector3(0, lDirectionY, 0));
+			mTargetDirectY = Mathf.Atan2(lDirectPos.x, lDirectPos.z) * Mathf.Rad2Deg;
+			float mAttackDirectY = 0.0f;
+			if (mTargetDirectY > -45.0f && mTargetDirectY <= 45.0f)
+				mAttackDirectY = 0.0f;
+			else if (mTargetDirectY > 45.0f && mTargetDirectY <= 135.0f)
+				mAttackDirectY = 90.0f;
+			else if ((mTargetDirectY > 135.0f && mTargetDirectY <= 180.0f) ||
+					 (mTargetDirectY > -180.0f && mTargetDirectY <= -135.0f))
+				mAttackDirectY = 180.0f;
+			else
+				mAttackDirectY = -90.0f;
+
+			aTransform.rotation = Quaternion.Euler(new Vector3(0, mAttackDirectY, 0));
 		}
 	}
-	private IEnumerator TestMissile()
+	private IEnumerator _ShotMissile()
 	{
 		while (true)
 		{
@@ -46,7 +57,7 @@ public class UnitHero : Unit
 											0,
 											vWeaponTransform.position.z - vModelTransform.position.z);
 			lDirect = lDirect.normalized;
-			MissileManager.aInstance.AddMissile(this, Missile.Type.Direct, vWeaponTransform.position, lDirect);
+			MissileManager.aInstance.AddMissile(this, vMissileType, vWeaponTransform.position, lDirect);
 		}
 	}
 	public override void Destroy()
@@ -120,4 +131,6 @@ public class UnitHero : Unit
 			Debug.Log("Damage from missile - " + lMissile.vPower + "!!!!!");
 		}
 	}
+
+	private float mTargetDirectY;
 }

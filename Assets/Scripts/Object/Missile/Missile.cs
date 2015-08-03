@@ -3,12 +3,8 @@ using System.Collections;
 
 public class Missile : MonoBehaviour 
 {
-	public enum Type
-	{
-		Direct,
-	}
     public int vGuid; // 고유Id
-	public Type vType; // 미사일 타입(풀링을 위해 존재)
+	public MissileType vType; // 미사일 타입(풀링을 위해 존재)
 	public int vUnitTeamId; // 발사한 유닛의 구분자
 	public float vDistance; // 사정거리
 	public int vPower; // 데미지
