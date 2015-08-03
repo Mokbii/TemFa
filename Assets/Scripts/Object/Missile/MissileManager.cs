@@ -9,13 +9,13 @@ public enum MissileType
 	Slow,
 	Count
 }
-public class MissileManager 
+public class MissileManager
 {
 	public readonly String[] MissileTypePath = {
 		"Prefabs/Missile/Direct Missile", // Direct
 		"Prefabs/Missile/Slow Missile", // Slow
 	};
-	
+
 	public static MissileManager aInstance
 	{
 		get
@@ -28,31 +28,28 @@ public class MissileManager
 
 	public void Init()
 	{
-        mMissilePool = new Dictionary<MissileType, Queue<Missile>>();
+		mMissilePool = new Dictionary<MissileType, Queue<Missile>>();
 	}
 	public void AddMissile(Unit pAttackUnit, MissileType pType, Vector3 pStartPos, Vector3 pMissileDirect)
 	{
 		Missile lMissile = _CreateMissile(pType, pStartPos);
-		if(lMissile != null)
+		if (lMissile != null)
 			lMissile.GoShot(pAttackUnit, pStartPos, pMissileDirect);
 		//if (pType == Missile.Type.Direct)
 		//{
-			
+
 		//}
 	}
-    public void RemoveMissile(Missile pMissile)
-    {
-        if(!mMissilePool.ContainsKey(pMissile.vType))
-        {
-            mMissilePool.Add(pMissile.vType, new Queue<Missile>());
-        }
-        if(mMissilePool[pMissile.vType].Count <= 0)
-        {
-            mMissilePool[pMissile.vType].Enqueue(pMissile);
-        }
-    }
+	public void RemoveMissile(Missile pMissile)
+	{
+		if (!mMissilePool.ContainsKey(pMissile.vType))
+		{
+			mMissilePool.Add(pMissile.vType, new Queue<Missile>());
+		}
+		mMissilePool[pMissile.vType].Enqueue(pMissile);
+	}
 	private Missile _CreateMissile(MissileType pType, Vector3 pStartPos)
-    {
+	{
 		Missile lResultMissile = _FindMissileFromPool(pType);
 		if (lResultMissile == null)
 		{
@@ -66,25 +63,25 @@ public class MissileManager
 			lResultMissile.Init(_CreateMissileGuid());
 		}
 		return lResultMissile;
-    }
+	}
 	private Missile _FindMissileFromPool(MissileType pType)
-    {
-        if (!mMissilePool.ContainsKey(pType))
-            return null;
+	{
+		if (!mMissilePool.ContainsKey(pType))
+			return null;
 		if (mMissilePool[pType].Count <= 0)
 			return null;
 
 		Missile lResultMissile = mMissilePool[pType].Dequeue();
 		lResultMissile.gameObject.SetActive(true);
 		return lResultMissile;
-    }
-    private int _CreateMissileGuid()
-    {
-        mCurrentCreateGuid++;
-        return mCurrentCreateGuid;
-    }
+	}
+	private int _CreateMissileGuid()
+	{
+		mCurrentCreateGuid++;
+		return mCurrentCreateGuid;
+	}
 	private static MissileManager sInstance;
-    private int mCurrentCreateGuid = 0;
+	private int mCurrentCreateGuid = 0;
 
 	private Dictionary<MissileType, Queue<Missile>> mMissilePool;
 }
