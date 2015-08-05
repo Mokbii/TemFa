@@ -79,7 +79,9 @@
     <Compile Include="Assets\Scripts\Object\Missile\Missile.cs" />
     <Compile Include="Assets\Scripts\Object\Missile\MissileManager.cs" />
     <Compile Include="Assets\Scripts\TestManager.cs" />
+    <Compile Include="Assets\Scripts\Unit\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
+    <Compile Include="Assets\Scripts\Unit\UnitEnemy.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitHero.cs" />
   </ItemGroup>
   <ItemGroup>

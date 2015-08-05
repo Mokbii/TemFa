@@ -11,6 +11,7 @@ public class GameControl
 	public delegate void OnMovePosition(Vector2 pDeltaPos);
 	public delegate void OnMoveStart();
 	public delegate void OnMoveEnd();
+	public delegate void OnPickObject(ColliderInfo pColliderInfo);
 
 	public OnMovePosition aOnMovePosition
 	{
@@ -26,6 +27,11 @@ public class GameControl
 	{
 		set { mOnMoveEnd = value; }
 		get { return mOnMoveEnd; }
+	}
+	public OnPickObject aOnPickObject
+	{
+		set { mOnPickObject = value; }
+		get { return mOnPickObject; }
 	}
 	public static GameControl aInstance
 	{
@@ -50,6 +56,17 @@ public class GameControl
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
+			RaycastHit lHit;
+			Ray lRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+			if (Physics.Raycast(lRay, out lHit))
+			{
+				ColliderInfo lColliderInfo = (ColliderInfo)lHit.transform.GetComponent<ColliderInfo>();
+				if (aOnPickObject != null)
+				{
+					aOnPickObject(lColliderInfo);
+				}
+				//Debug.Log("Picking collider - " + lColliderInfo.name);
+			}
 			mLastMousePosition = Input.mousePosition;
 			mIsMouseDown = true;
 			if (aOnMoveStart != null)
@@ -75,6 +92,7 @@ public class GameControl
 	private OnMovePosition mOnMovePosition;
 	private OnMoveStart mOnMoveStart;
 	private OnMoveEnd mOnMoveEnd;
+	private OnPickObject mOnPickObject;
 
 	// Mouse 처리
 	private bool mIsMouseDown;

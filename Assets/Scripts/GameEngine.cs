@@ -21,6 +21,7 @@ public class GameEngine : MonoBehaviour
 		GameControl.aInstance.Init();
 		ColliderManager.aInstance.Init();
 		MissileManager.aInstance.Init();
+		EnemyManager.aInstance.Init();
 
 		// 게임 필수 오브젝트 처리
 		vHeroUnit.Init();

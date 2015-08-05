@@ -43,7 +43,7 @@ public class DirectMissile : Missile
         if (pColliderInfo.vType == ColliderType.Unit)
         {
             Unit lUnit = pColliderInfo.GetComponent<Unit>();
-            if (lUnit.vUnitTeamId != pColliderInfo.vValue)
+            if (lUnit.vUnitTeamId != vColliderInfo.vValue)
             {
                 _OnDestroy();
             }

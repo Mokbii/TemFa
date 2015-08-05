@@ -10,7 +10,7 @@ public class Unit : MonoBehaviour
 	{
 		get { return mTransform; }
 	}
-	public virtual void  Init()
+	public virtual void Init()
 	{
 		vUnitColliderInfo = gameObject.GetComponent<ColliderInfo>();
 		mTransform = transform;

@@ -19,6 +19,7 @@ public class UnitHero : Unit
 		GameControl.aInstance.aOnMovePosition += _OnMovePosition;
 		GameControl.aInstance.aOnMoveStart += _OnMoveStart;
 		GameControl.aInstance.aOnMoveEnd += _OnMoveEnd;
+		GameControl.aInstance.aOnPickObject += _OnPickObject;
 		vUnitColliderInfo.aOnColliderDelegate += _OnCollider;
 
 		vRigidBody = gameObject.GetComponent<Rigidbody>();
@@ -121,7 +122,14 @@ public class UnitHero : Unit
 		mMoveSpeed = new Vector2(0, 0);
 		vAnim.CrossFade("Standing@loop", 0.1f, 0, 0.5f);
 	}
-
+	private void _OnPickObject(ColliderInfo pColliderInfo)
+	{
+		if(pColliderInfo.vType == ColliderType.Unit &&
+			pColliderInfo.vValue == 1)
+		{
+			vTargetObject = pColliderInfo.transform;
+		}
+	}
 	private void _OnCollider(ColliderInfo pColliderInfo)
 	{
 		if (pColliderInfo.vType == ColliderType.Missile && pColliderInfo.vValue != vUnitTeamId)
