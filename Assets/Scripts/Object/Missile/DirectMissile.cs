@@ -45,6 +45,7 @@ public class DirectMissile : Missile
             Unit lUnit = pColliderInfo.GetComponent<Unit>();
             if (lUnit.vUnitTeamId != vColliderInfo.vValue)
             {
+				lUnit.OnMissileCollider(this);
                 _OnDestroy();
             }
         }

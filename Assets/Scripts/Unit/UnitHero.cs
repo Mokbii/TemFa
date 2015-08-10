@@ -27,11 +27,20 @@ public class UnitHero : Unit
 		StartCoroutine(_ShotMissile());
 		StartCoroutine(_FindTargetRot());
 	}
+	public void SetTarget(UnitEnemy pEnemy)
+	{
+		vTargetObject = pEnemy.aTransform;
+	}
+
 	private IEnumerator _FindTargetRot()
 	{
 		while (true)
 		{
 			yield return null;
+
+			if (vTargetObject == null)
+				continue;
+
 			Vector3 lDirectPos = vTargetObject.position - aTransform.position;
 
 			mTargetDirectY = Mathf.Atan2(lDirectPos.x, lDirectPos.z) * Mathf.Rad2Deg;
@@ -61,12 +70,11 @@ public class UnitHero : Unit
 			MissileManager.aInstance.AddMissile(this, vMissileType, vWeaponTransform.position, lDirect);
 		}
 	}
-	public override void Destroy()
+	private void _OnDestroy()
 	{
 		GameControl.aInstance.aOnMovePosition -= _OnMovePosition;
 		GameControl.aInstance.aOnMoveStart -= _OnMoveStart;
 		GameControl.aInstance.aOnMoveEnd -= _OnMoveEnd; 
-		base.Destroy();
 	}
 	private void _OnMovePosition(Vector2 pDeltaPos)
 	{

@@ -26,6 +26,10 @@ public class ColliderInfo : MonoBehaviour
 			Debug.LogError("vCollider Is Empty. please enter the collider in this object - " + this);
 		ColliderManager.aInstance.AddCollider(this);
 	}
+	void OnDestroy()
+	{
+		ColliderManager.aInstance.RemoveCollider(this);
+	}
 	void OnTriggerEnter(Collider pOther)
 	{
 		//Debug.Log("OnTrigger Enter From " + this.name + " to " + pOther.name);

@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MapTile 
+public class MapTile
 {
-	public Map.MapTileType aTileType
-	{
-		get { return mTileType; }
-	}
+	public Vector2 aMapPosition { get { return mPosition; } }
+	public Map.MapTileType aTileType { get { return mTileType; } }
+
 	public MapTile()
 	{
 		mIndex = 0;
@@ -26,7 +25,7 @@ public class MapTile
 	}
 	public void DrawDebugTile()
 	{
-		Debug.DrawLine(new Vector3(mRect.x, 1, mRect.y), new Vector3(mRect.width, 1, mRect.y)); 
+		Debug.DrawLine(new Vector3(mRect.x, 1, mRect.y), new Vector3(mRect.width, 1, mRect.y));
 		Debug.DrawLine(new Vector3(mRect.width, 1, mRect.y), new Vector3(mRect.width, 1, mRect.height));
 		Debug.DrawLine(new Vector3(mRect.width, 1, mRect.height), new Vector3(mRect.x, 1, mRect.height));
 		Debug.DrawLine(new Vector3(mRect.x, 1, mRect.height), new Vector3(mRect.x, 1, mRect.y));

@@ -35,10 +35,6 @@ public class MissileManager
 		Missile lMissile = _CreateMissile(pType, pStartPos);
 		if (lMissile != null)
 			lMissile.GoShot(pAttackUnit, pStartPos, pMissileDirect);
-		//if (pType == Missile.Type.Direct)
-		//{
-
-		//}
 	}
 	public void RemoveMissile(Missile pMissile)
 	{

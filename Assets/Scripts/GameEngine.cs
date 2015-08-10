@@ -19,13 +19,15 @@ public class GameEngine : MonoBehaviour
 
 		// 게임에서 사용할 싱글턴 객체들 처리(관리자)
 		GameControl.aInstance.Init();
+		GameDataManager.aInstance.Init();
 		ColliderManager.aInstance.Init();
 		MissileManager.aInstance.Init();
-		EnemyManager.aInstance.Init();
 
 		// 게임 필수 오브젝트 처리
 		vHeroUnit.Init();
 		vMapBase.Init();
+
+		GameDataManager.aInstance.SetInfo(vHeroUnit, vMapBase);
 
 		// 로드는 차후 다른곳으로 이동 - 랜덤맵 사용
 		_LoadMap();
@@ -33,10 +35,10 @@ public class GameEngine : MonoBehaviour
 	void Update()
 	{
 		GameControl.aInstance.OnUpdate();
+		GameDataManager.aInstance.OnUpdate();
 	}
 	void OnDestory()
 	{
-		vHeroUnit.Destroy();
 	}
 	// 맵 정보를 불러오고, 주인공 유닛에 맵정보를 입력합니다.
 	private void _LoadMap()

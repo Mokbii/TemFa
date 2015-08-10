@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\ButtonTest.cs" />
      <Compile Include="Assets\Scripts\GameControl.cs" />
+     <Compile Include="Assets\Scripts\GameDataManager.cs" />
      <Compile Include="Assets\Scripts\GameEngine.cs" />
      <Compile Include="Assets\Scripts\Map\Map.cs" />
      <Compile Include="Assets\Scripts\Map\MapTile.cs" />
@@ -57,7 +58,6 @@
      <Compile Include="Assets\Scripts\Object\Missile\Missile.cs" />
      <Compile Include="Assets\Scripts\Object\Missile\MissileManager.cs" />
      <Compile Include="Assets\Scripts\TestManager.cs" />
-     <Compile Include="Assets\Scripts\Unit\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\Unit\Unit.cs" />
      <Compile Include="Assets\Scripts\Unit\UnitEnemy.cs" />
      <Compile Include="Assets\Scripts\Unit\UnitHero.cs" />
