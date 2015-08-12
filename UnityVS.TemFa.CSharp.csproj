@@ -85,6 +85,8 @@
     <Compile Include="Assets\Scripts\Unit\UnitHero.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\PQAssets\Query-Chan-SD\license_en.txt" />
+    <None Include="Assets\PQAssets\Query-Chan-SD\license_jp.txt" />
     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
     <None Include="Assets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
