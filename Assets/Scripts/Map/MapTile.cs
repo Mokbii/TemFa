@@ -13,15 +13,20 @@ public class MapTile
 		mPosition = new Vector2(0, 0);
 		mTileType = Map.MapTileType.None;
 	}
-	public MapTile(int pIndex, Vector2 pPos, float pSize)
+	public MapTile(int pIndex, int pRow, int pCol, float pSize)
 	{
 		mIndex = pIndex;
-		mPosition = new Vector2(pPos.x, pPos.y);
-		mRect = new Rect(pPos.x, pPos.y, pPos.x + pSize, pPos.y + pSize);
+		mPosition = new Vector2(pRow * pSize, pCol * pSize);
+		mRect = new Rect(mPosition.x, mPosition.y, mPosition.x + pSize, mPosition.y + pSize);
+		mRowCol = new Vector3(pRow, pCol);
 	}
 	public void SetTileType(Map.MapTileType pTileType)
 	{
 		mTileType = pTileType;
+	}
+	public Vector2 GetRowCol()
+	{
+		return mRowCol;
 	}
 	public void DrawDebugTile()
 	{
@@ -33,6 +38,6 @@ public class MapTile
 	private int mIndex;
 	private Vector2 mPosition;
 	private Rect mRect;
-	private Rect mDrawRact;
 	private Map.MapTileType mTileType;
+	private Vector2 mRowCol; // x : row, y : col
 }

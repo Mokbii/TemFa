@@ -54,6 +54,9 @@ public class GameControl
 	// 조작과 관련된 처리
 	private void _UpdateMouse()
 	{
+		if (!GameDataManager.aInstance.aIsActiveGame)
+			return;
+
 		if (Input.GetMouseButtonDown(0))
 		{
 			RaycastHit lHit;

@@ -25,7 +25,6 @@ public class MissileManager
 			return sInstance;
 		}
 	}
-
 	public void Init()
 	{
 		mMissilePool = new Dictionary<MissileType, Queue<Missile>>();

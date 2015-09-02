@@ -31,7 +31,8 @@ public class Map : MonoBehaviour
 		{
 			for (int iRow = 0; iRow < mRowCount; iRow++)
 			{
-				MapTile lMapTile = new MapTile(iCol * vMapWidth + iRow, new Vector2((iRow * vTileSize), (iCol * vTileSize)), vTileSize);
+				//MapTile lMapTile = new MapTile(iCol * vMapWidth + iRow, new Vector2((iRow * vTileSize), (iCol * vTileSize)), vTileSize);
+				MapTile lMapTile = new MapTile(iCol * vMapWidth + iRow, iRow, iCol, vTileSize);
 				mMapTiles[iRow, iCol] = lMapTile;
 			}
 		}

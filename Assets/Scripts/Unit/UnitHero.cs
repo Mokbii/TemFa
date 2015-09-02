@@ -31,7 +31,12 @@ public class UnitHero : Unit
 	{
 		vTargetObject = pEnemy.aTransform;
 	}
-
+	public override void GoDie()
+	{
+		base.GoDie();
+		vAnim.CrossFade("GoDown", 0.2f, 0, 0.5f);
+		GameDataManager.aInstance.OnEndGame();
+	}
 	private IEnumerator _FindTargetRot()
 	{
 		while (true)
@@ -62,6 +67,11 @@ public class UnitHero : Unit
 	{
 		while (true)
 		{
+			if (!IsAvailableShot())
+			{
+				yield return null;
+				continue;
+			}
 			yield return new WaitForSeconds(vWeaponDelay);
 			Vector3 lDirect = new Vector3(vWeaponTransform.position.x - vModelTransform.position.x,
 											0,
@@ -78,6 +88,9 @@ public class UnitHero : Unit
 	}
 	private void _OnMovePosition(Vector2 pDeltaPos)
 	{
+		if (mIsStiff)
+			return;
+
 		float lMoveSpeedX = pDeltaPos.x * Time.deltaTime;
 		float lMoveSpeedY = pDeltaPos.y * Time.deltaTime;
 
@@ -122,11 +135,17 @@ public class UnitHero : Unit
 
 	private void _OnMoveStart()
 	{
+		if (mIsStiff)
+			return;
+
 		mMoveSpeed = new Vector2(0, 0);
 		vAnim.CrossFade("Running@loop", 0.1f, 0, 0.5f);
 	}
 	private void _OnMoveEnd()
 	{
+		if (mIsStiff)
+			return;
+
 		mMoveSpeed = new Vector2(0, 0);
 		vAnim.CrossFade("Standing@loop", 0.1f, 0, 0.5f);
 	}
@@ -140,13 +159,59 @@ public class UnitHero : Unit
 	}
 	private void _OnCollider(ColliderInfo pColliderInfo)
 	{
+		bool lIsDamaged = false;
 		if (pColliderInfo.vType == ColliderType.Missile && pColliderInfo.vValue != vUnitTeamId)
 		{
 			Missile lMissile = pColliderInfo.GetComponent<Missile>();
-
-			Debug.Log("Damage from missile - " + lMissile.vPower + "!!!!!");
+			vHp -= lMissile.vPower;
+			lIsDamaged = true;
+		}
+		else if (pColliderInfo.vType == ColliderType.Unit && pColliderInfo.vValue != vUnitTeamId)
+		{
+			vHp -= 1;
+			lIsDamaged = true;
+		}
+		// HP 처리
+		if (lIsDamaged)
+		{
+			if (vHp <= 0)
+			{
+				mIsStiff = true;
+				GoDie();
+			}
+			else
+			{
+				mIsStiff = true;
+				vAnim.CrossFade("GoDown", 0.1f, 0, 0.5f);
+			}
 		}
 	}
+	private void EndGoDown()
+	{
+		if (!GameDataManager.aInstance.aIsActiveGame)
+		{
+			vAnim.speed = 0.0f;
+			Debug.Log("Game Ending");
+		}
+	}
+	// 경직 종료
+	private void OnDownToUp()
+	{
+		mIsStiff = false;
+		vAnim.CrossFade("Standing@loop", 0.1f, 0, 0.5f);
+	}
+	/// <summary>
+	/// 미사일 발사가 안되는 경우 확인
+	/// </summary>
+	private bool IsAvailableShot()
+	{
+		if (GameDataManager.aInstance.aUnitEnemyList.Count <= 0)
+			return false;
+		if (mIsStiff)
+			return false;
 
+		return true;
+	}
+	private bool mIsStiff;
 	private float mTargetDirectY;
 }

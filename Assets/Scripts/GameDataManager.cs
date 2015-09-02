@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+/// <summary>
+/// 맵이 바뀔때마다 GameDataManager에서의 셋팅도 변경됩니다
+/// </summary>
 public class GameDataManager
 {
 	public static GameDataManager aInstance
@@ -13,17 +15,26 @@ public class GameDataManager
 			return sInstance;
 		}
 	}
+	/// <summary>
+	/// 속성
+	/// </summary>
+	public List<UnitEnemy> aUnitEnemyList
+	{
+		get { return mUnitEnemyList; }
+	}
+	public UnitHero aUnitHero
+	{
+		get { return mUnitHero; }
+	}
+	public bool aIsActiveGame
+	{
+		get { return mIsActiveGame; }
+	}
+
 	public void Init()
 	{
 		mUnitEnemyList = new List<UnitEnemy>();
-	}
-	public void OnUpdate()
-	{
-		if (mUnitHero.vTargetObject == null)
-		{
-
-		}
-		// mUnitHero.SetTarget();
+		mIsActiveGame = true;
 	}
 	public void SetInfo(UnitHero pHero, Map pMap)
 	{
@@ -43,8 +54,13 @@ public class GameDataManager
 			mUnitHero.vTargetObject = null;
 		}
 	}
+	public void OnEndGame()
+	{
+		mIsActiveGame = false;
+	}
 	private static GameDataManager sInstance;
 	private UnitHero mUnitHero;
 	private Map mMap;
 	private List<UnitEnemy> mUnitEnemyList;
+	private bool mIsActiveGame; 
 }

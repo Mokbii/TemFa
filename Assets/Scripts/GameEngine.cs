@@ -35,7 +35,7 @@ public class GameEngine : MonoBehaviour
 	void Update()
 	{
 		GameControl.aInstance.OnUpdate();
-		GameDataManager.aInstance.OnUpdate();
+		//GameDataManager.aInstance.OnUpdate();
 	}
 	void OnDestory()
 	{
