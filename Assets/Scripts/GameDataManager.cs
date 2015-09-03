@@ -26,6 +26,10 @@ public class GameDataManager
 	{
 		get { return mUnitHero; }
 	}
+	public Map aMap
+	{
+		get { return mMap; }
+	}
 	public bool aIsActiveGame
 	{
 		get { return mIsActiveGame; }

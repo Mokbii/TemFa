@@ -6,12 +6,12 @@ E:\private\Unity_Project\TemFa\Temp\UnityVS_bin\Debug\UnityEngine.Analytics.dll
 E:\private\Unity_Project\TemFa\Temp\UnityVS_bin\Debug\UnityEngine.dll
 E:\private\Unity_Project\TemFa\Temp\UnityVS_bin\Debug\UnityEngine.Networking.dll
 E:\private\Unity_Project\TemFa\Temp\UnityVS_bin\Debug\UnityEngine.UI.dll
+E:\private\Unity_Project\TemFa\obj\Debug\UnityVS.TemFa.CSharp.csprojResolveAssemblyReference.cache
+E:\private\Unity_Project\TemFa\obj\Debug\Assembly-CSharp.dll
+E:\private\Unity_Project\TemFa\obj\Debug\Assembly-CSharp.pdb
 E:\private\Unity_Project\TemFa\Temp\UnityVS_bin\Debug\UnityEngine.xml
 E:\private\Unity_Project\TemFa\Temp\UnityVS_bin\Debug\UnityEditor.xml
 E:\private\Unity_Project\TemFa\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
 E:\private\Unity_Project\TemFa\Temp\UnityVS_bin\Debug\UnityEngine.Networking.xml
 E:\private\Unity_Project\TemFa\Temp\UnityVS_bin\Debug\UnityEngine.Analytics.xml
 E:\private\Unity_Project\TemFa\Temp\UnityVS_bin\Debug\UnityEditor.iOS.Extensions.Xcode.xml
-E:\private\Unity_Project\TemFa\obj\Debug\UnityVS.TemFa.CSharp.csprojResolveAssemblyReference.cache
-E:\private\Unity_Project\TemFa\obj\Debug\Assembly-CSharp.dll
-E:\private\Unity_Project\TemFa\obj\Debug\Assembly-CSharp.pdb
